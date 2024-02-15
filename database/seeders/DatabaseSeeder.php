@@ -14,9 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        # ME PERMITE CREAR UN USUARIO DE PRUEBA AL GENERAR LA BBDD
+        \App\Models\User::factory()->create([
+            'username' => 'adminName',
+            'email' => 'admin@klmusic.com',
+            'role' => 'admin',
+            'password'=> 123
+        ]);
     }
 }

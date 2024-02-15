@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('role')->default('guest');//unverified_user
+            $table->rememberToken();// FUNCION -> string('token', 1000)->nullable();
             $table->timestamps();
+
+            # CAMPO PARA SABER CUANDO FUE LA ULTIMA VERIFICACION DEL CORREO
+            //$table->timestamp('email_verified_at')->nullable(); 
         });
     }
 
