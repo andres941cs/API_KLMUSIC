@@ -39,7 +39,7 @@ class PublicationController extends Controller
         return response()->json($publication, 200);
     }
 
-    # ELIMINA UN USUARIO DE LA BBDD
+    # ELIMINA UNA PUBLICACION DE LA BBDD
     public function destroy(string $id)
     {
         $publication = Publication::findOrFail($id);
