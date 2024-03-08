@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KaraokeController;
+use App\Http\Controllers\LyricController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -35,6 +40,9 @@ Route::put('/user/{id}', [UserController::class, 'update']);
 Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
 # RUTAR PROFILES
+Route::get('/profile/{id}', [ProfileController::class, 'show']);
+Route::post('/profile', [ProfileController::class, 'store']);
+Route::put('/profile/{id}', [ProfileController::class, 'update']);
 
 # RUTAS SONGS
 Route::get('/songs', [SongController::class, 'index']);
@@ -45,3 +53,29 @@ Route::delete('/song/{id}', [SongController::class, 'destroy']);
 # RUTAS ARTIST
 Route::get('/artist', [ArtistController::class, 'index']);
 Route::post('/artist', [ArtistController::class, 'store']);
+Route::put('/artist/{id}', [ArtistController::class, 'update']);
+Route::delete('/artist/{id}', [ArtistController::class, 'destroy']);
+
+# RUTAS ALBUM
+Route::get('/album', [AlbumController::class, 'index']);
+Route::post('/album', [AlbumController::class, 'store']);
+Route::put('/album/{id}', [AlbumController::class, 'update']);
+Route::delete('/album/{id}', [AlbumController::class, 'destroy']);
+
+# RUTAS LYRICS
+Route::get('/lyric', [LyricController::class, 'index']);
+Route::post('/lyric', [LyricController::class, 'store']);
+Route::put('/lyric/{id}', [LyricController::class, 'update']);
+Route::delete('/lyric/{id}', [LyricController::class, 'destroy']);
+
+# RUTAS KARAOKE
+Route::get('/karaoke', [KaraokeController::class, 'index']);
+Route::post('/karaoke', [KaraokeController::class, 'store']);
+Route::put('/karaoke/{id}', [KaraokeController::class, 'update']);
+Route::delete('/karaoke/{id}', [KaraokeController::class, 'destroy']);
+
+# RUTAS PUBLICATION
+Route::get('/publication', [PublicationController::class, 'index']);
+Route::post('/publication', [PublicationController::class, 'store']);
+Route::put('/publication/{id}', [PublicationController::class, 'update']);
+Route::delete('/publication/{id}', [PublicationController::class, 'destroy']);
