@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('duration');
             $table->string('genre');
-            $table->unsignedBigInteger('id_album');
+            $table->unsignedBigInteger('id_album')->nullable();
             $table->foreignId('id_album')->references('id')->on('albums');
             $table->timestamps();
         });

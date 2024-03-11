@@ -21,16 +21,21 @@ class AlbumController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'id_artist' => 'required|exists:artists,id_artist',
-            'release_date' => 'required|date',
-            'genre' => 'required',
-        ]);
+        // $request->validate([
+        //     'name' => 'required',
+        //     'id_artist' => 'required|exists:artists,id_artist',
+        //     'release_date' => 'required|date',
+        //     'genre' => 'required',
+        // ]);
 
         $album = Album::create($request->only(['name', 'id_artist', 'release_date', 'genre']));
-
         return response()->json($album, 201);
+        // Album::create([
+        //     'name' => $request->name,
+        //     'release_date' => $request->release_date,
+        //     'genre' => $request->genre,
+        // ]);
+        // return response()->json("Created Sucessfull", 200);
     }
 
     public function update(Request $request, string $id)

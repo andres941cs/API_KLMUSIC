@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
-            $table->text('text');
+            $table->string('text');
             $table->boolean('isPublished');
-            $table->timestamp('publication_date');
+            $table->date('publication_date');
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_karaoke');
-            $table->foreignId('id_user')->references('id')->on('users');
-            $table->foreignId('id_karaoke')->references('id')->on('karaokes');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_karaoke')->references('id')->on('karaokes');
+            $table->timestamps();
+            // $table->foreignId('id_user')->references('id')->on('users');
+            // $table->foreignId('id_karaoke')->references('id')->on('karaokes');
         });
     }
 
