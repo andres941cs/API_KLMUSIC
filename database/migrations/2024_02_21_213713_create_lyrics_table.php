@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('lyrics', function (Blueprint $table) {
             $table->id();
             $table->string('lyric', 3000);
-            $table->string('lyric_romaji', 3000);
-            $table->string('url', 2083);
             $table->unsignedBigInteger('id_song');
             $table->foreign('id_song')->references('id')->on('songs');
             $table->timestamps();

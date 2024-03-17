@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class SongController extends Controller
 {
+    const UPLOAD_PATH = 'public/images/songs/';
     /**
      * DEVULEVE TODAS LAS CANCIONES DE LA BBDD
      */
@@ -20,8 +21,19 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
+        
         //response()->json($usuario, 200);
-        Song::create($request->all());
+        // Song::create($request->all());
+        $file = $request->file('image');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path(self::UPLOAD_PATH), $fileName);
+        $song = new Song();
+        $song->name = $request->name;
+        $song->duration = $request->duration;
+        $song->genre = $request->genre;
+        $song->id_artist = $request->id_artist;
+        $song->image = self::UPLOAD_PATH . '/' . $fileName;
+        $song->save();
         return response()->json("Created Sucessfull", 200);
     }
 

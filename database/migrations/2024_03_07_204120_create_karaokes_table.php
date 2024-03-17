@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('karaokes', function (Blueprint $table) {
             $table->id();
             $table->string('settings', 2000);
-            $table->foreignId('id_lyric')->references('id')->on('lyrics');
+            $table->boolean('isPublished');
+            $table->date('publication_date');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_lyric');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_lyric')->references('id')->on('lyrics');
             $table->timestamps();
         });
     }
