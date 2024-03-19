@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('country');
             $table->boolean('verified');
+            $table->string('image');
             $table->timestamps();
         });
     }

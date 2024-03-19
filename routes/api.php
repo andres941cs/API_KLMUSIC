@@ -47,9 +47,10 @@ Route::put('/profile/{id}', [ProfileController::class, 'update']);
 # RUTAS SONGS
 Route::get('/songs', [SongController::class, 'index']);
 Route::post('/song', [SongController::class, 'store']);
+Route::get('/song/{id}', [SongController::class, 'show']);
 Route::put('/song/{id}', [SongController::class, 'update']);
 Route::delete('/song/{id}', [SongController::class, 'destroy']);
-
+Route::post('/song/search', [SongController::class, 'search']);
 # RUTAS ARTIST
 Route::get('/artist', [ArtistController::class, 'index']);
 Route::post('/artist', [ArtistController::class, 'store']);

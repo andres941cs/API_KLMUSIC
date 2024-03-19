@@ -10,14 +10,21 @@ class Lyric extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lyric',
-        'lyric_romaji',
-        'url',
-        'id_song'
+        'lyric', 'language', 'id_song', 'id_video',
     ];
 
     public function song()
     {
         return $this->belongsTo(Song::class, 'id_song');
+    }
+
+    public function video()
+    {
+        return $this->belongsTo(Video::class, 'id_video');
+    }
+
+    public function karaoke()
+    {
+        return $this->hasOne(Karaoke::class);
     }
 }

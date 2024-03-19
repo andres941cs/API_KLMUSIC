@@ -44,14 +44,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    # DEVUEVLE EL PERFIL DEL USUARIO
-    public function profile()
+    # DEVUEVLE EL KARAOKES DEL USUARIO
+    public function karaokes()
     {
-        return $this->hasOne(Profile::class, 'id_user');
-    }
-
-    public function publications()
-    {
-        return $this->hasMany(Publication::class, 'id_user');
+        return $this->hasMany(Karaoke::class);
     }
 }

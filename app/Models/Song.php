@@ -17,18 +17,32 @@ class Song extends Model
         'image'
     ];
 
-    public function album()
+    // public function album()
+    // {
+    //     return $this->belongsTo(Album::class, 'id_album');
+    // }
+
+    // public function karaokes()
+    // {
+    //     return $this->hasOne(Karaoke::class, 'id_song');
+    // }
+
+    // public function lyrics()
+    // {
+    //     return $this->hasOne(Lyric::class, 'id_song');
+    // }
+    public function artist()
     {
-        return $this->belongsTo(Album::class, 'id_album');
+        return $this->belongsTo(Artist::class, 'id_artist');
     }
 
-    public function karaokes()
+    public function album()
     {
-        return $this->hasOne(Karaoke::class, 'id_song');
+        return $this->belongsTo(Album::class);
     }
 
     public function lyrics()
     {
-        return $this->hasOne(Lyric::class, 'id_song');
+        return $this->hasOne(Lyric::class);
     }
 }

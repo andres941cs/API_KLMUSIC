@@ -13,10 +13,16 @@ class Artist extends Model
         'name',
         'country',
         'verified',
+        'image'
     ];
     
     public function albums()
     {
-        return $this->hasMany(Album::class, 'id_artist');
+        return $this->hasMany(Album::class);
+    }
+
+    public function songs()
+    {
+        return $this->hasMany(Song::class);
     }
 }

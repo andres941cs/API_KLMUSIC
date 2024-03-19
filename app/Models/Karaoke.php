@@ -10,12 +10,16 @@ class Karaoke extends Model
     use HasFactory;
 
     protected $fillable = [
-        'settings',
-        'id_lyric',
+        'settings', 'publication_date', 'status', 'id_user', 'id_lyric',
     ];
 
-    public function song()
+    public function user()
     {
-        return $this->belongsTo(Song::class, 'id_song');
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function lyric()
+    {
+        return $this->belongsTo(Lyric::class, 'id_lyric');
     }
 }
