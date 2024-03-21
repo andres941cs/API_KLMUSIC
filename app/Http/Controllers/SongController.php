@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SongController extends Controller
 {
-    const UPLOAD_PATH = 'public/images/songs/';
+    const UPLOAD_PATH = 'images/songs/';
     /**
      * DEVULEVE TODAS LAS CANCIONES DE LA BBDD
      */

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
+    const UPLOAD_PATH = '/images/albums/';
     //
     public function index()
     {
@@ -19,6 +21,30 @@ class AlbumController extends Controller
         return response()->json($album);
     }
 
+    public function search(Request $request)
+    {
+        # HAY DOS FORMAS DE USAR EL POST $request->input('campo'); || $request->campo
+        $name = $request->input('search');
+        //$order = $request->input('order', 'asc');//defaul ASC
+        # CREAR UNA CONSULTA
+        $query = Artist::query();
+        // $query = Artist::with('artist');
+        # APLICAR LOS FILTROS
+        if ($name) {
+            $query->where('name', 'LIKE', '%' . $name . '%');
+        }
+
+        # APLICAR ORDEN
+        //$typeOrder = $request->input('typeOrder', 'title');//defaul ASC
+        //$query->orderBy($typeOrder, $order);
+
+        # APLICAR LA CONSULTA
+        
+        $artists = $query->get();
+        
+        return $artists;
+    }
+
     public function store(Request $request)
     {
         // $request->validate([
@@ -28,21 +54,27 @@ class AlbumController extends Controller
         //     'genre' => 'required',
         // ]);
 
-        $album = Album::create($request->only(['name', 'id_artist', 'release_date', 'genre']));
-        return response()->json($album, 201);
-        // Album::create([
-        //     'name' => $request->name,
-        //     'release_date' => $request->release_date,
-        //     'genre' => $request->genre,
-        // ]);
-        // return response()->json("Created Sucessfull", 200);
+        # SAVE IMG IN THE SERVER => PUBLIC/IMAGES/ARTISTS
+        $file = $request->file('image');
+        # GUARDARLO CON EL NOMBRE ORIGINAL CON UN ID
+        $fileName = uniqid(). '_' .$request->name . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('/images/albums/'), $fileName);
+        # CREAR UN INSTANCIA Y GUARDAR EN LA BBDD
+        Album::create([
+            'name' => $request->name,
+            'release_date' => $request->release_date,
+            'genre' => $request->genre,
+            'id_artist' => $request->id_artist,
+            'image' =>  self::UPLOAD_PATH . '/' . $fileName
+        ]);
+        return response()->json("Created Sucessfull", 200);
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'album_name' => 'required',
-            'id_artist' => 'required|exists:artists,id_artist',
+            'name' => 'required',
+            'id_artist' => 'required|exists:artists,id',
             'release_date' => 'required|date',
             'genre' => 'required',
         ]);

@@ -53,9 +53,11 @@ Route::delete('/song/{id}', [SongController::class, 'destroy']);
 Route::post('/song/search', [SongController::class, 'search']);
 # RUTAS ARTIST
 Route::get('/artist', [ArtistController::class, 'index']);
+Route::get('/artist/{id}', [ArtistController::class, 'show']);
 Route::post('/artist', [ArtistController::class, 'store']);
 Route::put('/artist/{id}', [ArtistController::class, 'update']);
 Route::delete('/artist/{id}', [ArtistController::class, 'destroy']);
+Route::post('/artist/search', [ArtistController::class, 'search']);
 
 # RUTAS ALBUM
 Route::get('/album', [AlbumController::class, 'index']);

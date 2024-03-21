@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ArtistController extends Controller
 {
-    const UPLOAD_PATH = 'public/images/artists/';
+    const UPLOAD_PATH = '/images/artists';
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +25,7 @@ class ArtistController extends Controller
         $file = $request->file('image');
         # GUARDARLO CON EL NOMBRE ORIGINAL CON UN ID
         $fileName = uniqid(). '_' .$request->name . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path(self::UPLOAD_PATH), $fileName);
+        $file->move(public_path('/images/artists/'), $fileName);
         # CREAR UN INSTANCIA Y GUARDAR EN LA BBDD
         $artist = new Artist();
         $artist->name = $request->name;
@@ -43,6 +43,30 @@ class ArtistController extends Controller
     public function show(string $id)
     {
         return Artist::find($id);
+    }
+
+    public function search(Request $request)
+    {
+        # HAY DOS FORMAS DE USAR EL POST $request->input('campo'); || $request->campo
+        $name = $request->input('search');
+        //$order = $request->input('order', 'asc');//defaul ASC
+        # CREAR UNA CONSULTA
+        $query = Artist::query();
+        // $query = Artist::with('artist');
+        # APLICAR LOS FILTROS
+        if ($name) {
+            $query->where('name', 'LIKE', '%' . $name . '%');
+        }
+
+        # APLICAR ORDEN
+        //$typeOrder = $request->input('typeOrder', 'title');//defaul ASC
+        //$query->orderBy($typeOrder, $order);
+
+        # APLICAR LA CONSULTA
+        
+        $artists = $query->get();
+        
+        return $artists;
     }
 
     /**
