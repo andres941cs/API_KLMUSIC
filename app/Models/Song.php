@@ -17,11 +17,6 @@ class Song extends Model
         'image'
     ];
 
-    // public function album()
-    // {
-    //     return $this->belongsTo(Album::class, 'id_album');
-    // }
-
     // public function karaokes()
     // {
     //     return $this->hasOne(Karaoke::class, 'id_song');
@@ -38,7 +33,7 @@ class Song extends Model
 
     public function album()
     {
-        return $this->belongsTo(Album::class);
+        return $this->belongsTo(Album::class, 'id_album');
     }
 
     public function lyrics()

@@ -24,13 +24,41 @@ class KaraokeController extends Controller
         return response()->json("Created Sucessfull", 200);
     }
 
+    public function search(string $name)
+    {
+        // $karaoke = Karaoke::whereHas('Song', function ($query) use ($name) {
+        //     $query->where('name', 'like', "%$name%");
+        // })->get();
+
+        $karaoke = Karaoke::whereHas('lyric.song', function ($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
+        })->get();
+    
+        
+        if ($karaoke->isEmpty()) {
+            return response()->json(['message' => 'No matching karaoke entries found'], 404);
+        }
+        return response()->json($karaoke, 200);
+    }
+    
+
+    /**
+     * Display a random resource.
+     */
+    public function random()
+    {
+        return Karaoke::inRandomOrder()->first();
+    }
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-        return Karaoke::find($id);
+        $karaoke = Karaoke::find($id);
+        $karaoke->load('Lyric.Song');
+        // $karaoke->unset('id_lyric');
+        return $karaoke;
     }
 
     /**

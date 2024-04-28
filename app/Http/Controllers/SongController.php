@@ -13,7 +13,17 @@ class SongController extends Controller
      */
     public function index()
     {
-        return Song::all();
+        // $songs = Song::all();
+        // foreach ($songs as $song) {
+        //     $song->artist_name = $song->artist->name;
+        //     if ($song->album) {
+        //         $song->album_name = $song->album->name;
+        //     }
+        //     // $song->album_name = $song->album->name;
+        //     unset($song->artist);
+        // }
+        $songs = Song::with('artist', 'album')->get();
+        return $songs;
     }
 
     /**
@@ -109,5 +119,17 @@ class SongController extends Controller
         $song = Song::findOrFail($id);
         $song->delete();
         return response()->json("Song deleted Sucessfull", 204);
+    }
+
+
+    public function showByArtist(string $id)
+    {
+        $songs = Song::where('id_artist', $id)->with('artist', 'album')->get();
+        return $songs;
+    }
+    public function showByAlbum(string $id)
+    {
+        $songs = Song::where('id_album', $id)->with('artist', 'album')->get();
+        return $songs;
     }
 }

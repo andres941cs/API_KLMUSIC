@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('genre');
             $table->string('image');
             $table->unsignedBigInteger('id_artist');
+            $table->unsignedBigInteger('id_album')->nullable();
             $table->foreign('id_artist')->references('id')->on('artists');
+            $table->foreign('id_album')->references('id')->on('albums');
             $table->timestamps();
         });
     }

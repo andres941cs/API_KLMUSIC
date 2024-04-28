@@ -48,6 +48,8 @@ Route::put('/profile/{id}', [ProfileController::class, 'update']);
 Route::get('/songs', [SongController::class, 'index']);
 Route::post('/song', [SongController::class, 'store']);
 Route::get('/song/{id}', [SongController::class, 'show']);
+Route::get('/song/artist/{id}', [SongController::class, 'showByArtist']);
+Route::get('/song/album/{id}', [SongController::class, 'showByAlbum']);
 Route::put('/song/{id}', [SongController::class, 'update']);
 Route::delete('/song/{id}', [SongController::class, 'destroy']);
 Route::post('/song/search', [SongController::class, 'search']);
@@ -70,12 +72,16 @@ Route::get('/lyric', [LyricController::class, 'index']);
 Route::post('/lyric', [LyricController::class, 'store']);
 Route::put('/lyric/{id}', [LyricController::class, 'update']);
 Route::delete('/lyric/{id}', [LyricController::class, 'destroy']);
+Route::get('/lyric/song/{id}', [LyricController::class, 'showLyricsBySong']);
 
 # RUTAS KARAOKE
 Route::get('/karaoke', [KaraokeController::class, 'index']);
+Route::get('/karaoke/{id}', [KaraokeController::class, 'show']);
 Route::post('/karaoke', [KaraokeController::class, 'store']);
 Route::put('/karaoke/{id}', [KaraokeController::class, 'update']);
 Route::delete('/karaoke/{id}', [KaraokeController::class, 'destroy']);
+Route::get('/karaoke/search/{name}', [KaraokeController::class, 'search']);
+Route::get('/karaoke/random', [KaraokeController::class, 'random']);
 
 # RUTAS PUBLICATION
 Route::get('/publication', [PublicationController::class, 'index']);

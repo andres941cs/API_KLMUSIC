@@ -10,7 +10,7 @@ class Karaoke extends Model
     use HasFactory;
 
     protected $fillable = [
-        'settings', 'publication_date', 'status', 'id_user', 'id_lyric',
+        'settings', 'publication_date', 'isPublished', 'id_user', 'id_lyric',
     ];
 
     public function user()

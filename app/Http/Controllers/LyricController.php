@@ -15,6 +15,11 @@ class LyricController extends Controller
         return Lyric::all();
     }
 
+    public function showLyricsBySong(string $id)
+    {
+        return Lyric::where('id_song', $id)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      */
