@@ -21,6 +21,12 @@ class AlbumController extends Controller
         return response()->json($album);
     }
 
+    public function showByArtist(string $id)
+    {
+        $albums = Album::where('id_artist', $id)->get();
+        return response()->json($albums);
+    }
+
     public function search(Request $request)
     {
         # HAY DOS FORMAS DE USAR EL POST $request->input('campo'); || $request->campo

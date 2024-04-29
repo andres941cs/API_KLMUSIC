@@ -63,6 +63,8 @@ Route::post('/artist/search', [ArtistController::class, 'search']);
 
 # RUTAS ALBUM
 Route::get('/album', [AlbumController::class, 'index']);
+Route::get('/album/{id}', [AlbumController::class, 'show']);
+Route::get('/album/artist/{id}', [AlbumController::class, 'showByArtist']);
 Route::post('/album', [AlbumController::class, 'store']);
 Route::put('/album/{id}', [AlbumController::class, 'update']);
 Route::delete('/album/{id}', [AlbumController::class, 'destroy']);
