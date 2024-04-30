@@ -32,7 +32,7 @@ class KaraokeController extends Controller
 
         $karaoke = Karaoke::whereHas('lyric.song', function ($query) use ($name) {
             $query->where('name', 'like', "%$name%");
-        })->get();
+        })->get()->load('lyric.song.artist');
     
         
         if ($karaoke->isEmpty()) {
