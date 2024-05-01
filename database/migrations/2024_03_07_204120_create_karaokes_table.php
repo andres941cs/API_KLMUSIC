@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('karaokes', function (Blueprint $table) {
             $table->id();
-            $table->string('settings', 10000);
+            $table->string('settings', 15000);
             $table->boolean('isPublished');
             $table->date('publication_date');
             $table->unsignedBigInteger('id_user');

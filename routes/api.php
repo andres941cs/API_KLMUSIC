@@ -83,7 +83,7 @@ Route::post('/karaoke', [KaraokeController::class, 'store']);
 Route::put('/karaoke/{id}', [KaraokeController::class, 'update']);
 Route::delete('/karaoke/{id}', [KaraokeController::class, 'destroy']);
 Route::get('/karaoke/search/{name}', [KaraokeController::class, 'search']);
-Route::get('/karaoke/random', [KaraokeController::class, 'random']);
+Route::get('/random/karaoke', [KaraokeController::class, 'random']);
 
 # RUTAS PUBLICATION
 Route::get('/publication', [PublicationController::class, 'index']);

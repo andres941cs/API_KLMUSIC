@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('language',100);
             $table->boolean('isInstrumental');
             $table->string('url', 2083);
+            $table->string('preview', 2083)->nullable();
             $table->unsignedBigInteger('id_song');
             $table->foreign('id_song')->references('id')->on('songs');
             $table->timestamps();

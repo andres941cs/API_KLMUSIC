@@ -40,15 +40,6 @@ class KaraokeController extends Controller
         }
         return response()->json($karaoke, 200);
     }
-    
-
-    /**
-     * Display a random resource.
-     */
-    public function random()
-    {
-        return Karaoke::inRandomOrder()->first();
-    }
 
     /**
      * Display the specified resource.
@@ -59,6 +50,11 @@ class KaraokeController extends Controller
         $karaoke->load('Lyric.Song');
         // $karaoke->unset('id_lyric');
         return $karaoke;
+    }
+
+    public function random()
+    {
+        return Karaoke::inRandomOrder()->first();
     }
 
     /**
