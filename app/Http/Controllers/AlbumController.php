@@ -12,7 +12,8 @@ class AlbumController extends Controller
     //
     public function index()
     {
-        return Album::all();
+        $albums = Album::with('artist')->get();
+        return $albums;
     }
 
     public function show(string $id)
