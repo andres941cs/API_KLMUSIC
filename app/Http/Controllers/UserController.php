@@ -39,6 +39,17 @@ class UserController extends Controller
         return User::find($id);
     }
 
+    # DEVUELVE LOS DATOS DE UN USUARIO
+    public function profile(Request $request)
+    {
+        return response()->json($request->user, 200);
+        // return response()->auth()->user()->id;
+        // $id = $request->auth->id;
+        
+        // $user = User::find($id);
+        // return response()->json($user, 200);
+    }
+
     # ACTUALIZA UN USUARIO - PARAMETROS: REQUEST, ID
     public function update(Request $request, string $id)
     {

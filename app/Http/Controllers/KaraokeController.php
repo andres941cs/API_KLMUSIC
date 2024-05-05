@@ -15,6 +15,15 @@ class KaraokeController extends Controller
         return Karaoke::all();
     }
 
+    public function showByUser(string $id)
+    {
+        $karaoke = Karaoke::where('id_user', $id)->get();
+        if ($karaoke->isEmpty()) {
+            return response()->json(['message' => 'No matching karaoke entries found'], 404);
+        }
+        return response()->json($karaoke, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

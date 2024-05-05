@@ -45,7 +45,7 @@ class Authenticate
                 'error'=>'ERROR INESPERADO'
             ],400);
         }
-        $user = User::find($credentials->sub);
+        $user = User::find($credentials->sub->id);
         if (!$user) {
             return response()->json([
                 'error'=>'Usuario no encontrado'

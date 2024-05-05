@@ -79,6 +79,7 @@ Route::get('/lyric/song/{id}', [LyricController::class, 'showLyricsBySong']);
 # RUTAS KARAOKE
 Route::get('/karaoke', [KaraokeController::class, 'index']);
 Route::get('/karaoke/{id}', [KaraokeController::class, 'show']);
+Route::get('/karaoke/user/{id}', [KaraokeController::class, 'showByUser']);
 Route::post('/karaoke', [KaraokeController::class, 'store']);
 Route::put('/karaoke/{id}', [KaraokeController::class, 'update']);
 Route::delete('/karaoke/{id}', [KaraokeController::class, 'destroy']);
@@ -90,3 +91,6 @@ Route::get('/publication', [PublicationController::class, 'index']);
 Route::post('/publication', [PublicationController::class, 'store']);
 Route::put('/publication/{id}', [PublicationController::class, 'update']);
 Route::delete('/publication/{id}', [PublicationController::class, 'destroy']);
+
+# RUTAS PROTEGIDS
+Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
