@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('country');
-            $table->boolean('verified');
+            $table->boolean('verified')->default(false);
             $table->string('image');
             $table->timestamps();
         });

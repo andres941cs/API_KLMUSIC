@@ -17,15 +17,6 @@ class Song extends Model
         'image'
     ];
 
-    // public function karaokes()
-    // {
-    //     return $this->hasOne(Karaoke::class, 'id_song');
-    // }
-
-    // public function lyrics()
-    // {
-    //     return $this->hasOne(Lyric::class, 'id_song');
-    // }
     public function artist()
     {
         return $this->belongsTo(Artist::class, 'id_artist');

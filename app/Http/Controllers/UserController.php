@@ -10,8 +10,7 @@ class UserController extends Controller
     # DEVUELVLE TODOS LOS USUARIOS DE LA BBDD
     public function index()
     {
-        $users = User::all();
-        return $users->toJson(JSON_PRETTY_PRINT);
+        return User::all();
     }
 
     # GUARDA UN USUARIO EN LA BBDD

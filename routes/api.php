@@ -24,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */  
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 # RUTAS AUTHENTICATE
 Route::post('/login', [AuthController::class, 'login']);
@@ -41,7 +38,6 @@ Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
 # RUTAR PROFILES
 Route::get('/profile/{id}', [ProfileController::class, 'show']);
-Route::post('/profile', [ProfileController::class, 'store']);
 Route::put('/profile/{id}', [ProfileController::class, 'update']);
 
 # RUTAS SONGS

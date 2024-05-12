@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('release_date');
             $table->string('genre');
             $table->string('image');
+            $table->boolean('verified')->default(false);
             $table->unsignedBigInteger('id_artist');
             $table->foreign('id_artist')->references('id')->on('artists');
             $table->timestamps();

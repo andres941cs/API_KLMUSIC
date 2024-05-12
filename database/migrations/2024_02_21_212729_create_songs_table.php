@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->string('genre');
             $table->string('image');
+            $table->boolean('verified')->default(false);
             $table->unsignedBigInteger('id_artist');
             $table->unsignedBigInteger('id_album')->nullable();
             $table->foreign('id_artist')->references('id')->on('artists');

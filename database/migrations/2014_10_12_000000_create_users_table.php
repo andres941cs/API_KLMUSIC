@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role')->default('guest');//unverified_user
-            $table->string('image')->default('/users/default.jpg');
+            $table->string('image')->default('images/users/default.jpg');
             $table->rememberToken();// FUNCION -> string('token', 1000)->nullable();
             $table->timestamps();
             # CAMPO PARA SABER CUANDO FUE LA ULTIMA VERIFICACION DEL CORREO
