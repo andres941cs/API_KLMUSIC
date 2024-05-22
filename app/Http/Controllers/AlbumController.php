@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -34,7 +35,7 @@ class AlbumController extends Controller
         $name = $request->input('search');
         //$order = $request->input('order', 'asc');//defaul ASC
         # CREAR UNA CONSULTA
-        $query = Artist::query();
+        $query = Album::query();
         // $query = Artist::with('artist');
         # APLICAR LOS FILTROS
         if ($name) {
@@ -47,9 +48,9 @@ class AlbumController extends Controller
 
         # APLICAR LA CONSULTA
         
-        $artists = $query->get();
+        $albums = $query->get();
         
-        return $artists;
+        return $albums;
     }
 
     public function store(Request $request)
@@ -96,5 +97,39 @@ class AlbumController extends Controller
         $album = Album::findOrFail($id);
         $album->delete();
         return response()->json(null, 204);
+    }
+
+    public function save(Request $request)
+    {
+        // AUTO CREATE ALBUM
+        if ($request->has('id')) {
+            $client = new Client();
+            $response = $client->request('GET', env('API_SERVICE_URL') . '/album/' . $request->id);
+            $data = json_decode($response->getBody(), true);
+            // COMPROBAR QUE LOS DATOS SON IGUALES AL DE LA PETICION
+            if ($data['name'] == $request->name && $data['release_date'] == $request->release_date && $data['image'] == $request->image){
+                Album::create([
+                    'name' => $request->name,
+                    'release_date' => $request->release_date,
+                    'genre' => $request->genre,
+                    'id_artist' => $request->id_artist,
+                    'image' =>  $request->image,
+                    'verified' => true
+                ]);
+                return response()->json("Created Sucessfull", 200);
+            }else{
+                return response()->json(["error"=>"Invalid data"], 200);
+            }   
+        }else{
+            // MANUALLY CREATE ARTIST
+            $album = new Album();
+            $album->name = $request->name;
+            $album->release_date = $request->release_date;
+            $album->image = $request->image;
+            $album->genre = $request->genre;
+            $album->id_artist = $request->id_artist;
+            $album->save();
+        }
+        return response()->json("Created Sucessfull", 200);
     }
 }

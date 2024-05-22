@@ -61,6 +61,7 @@ Route::post('/artist/search', [ArtistController::class, 'search']);
 Route::get('/album', [AlbumController::class, 'index']);
 Route::get('/album/{id}', [AlbumController::class, 'show']);
 Route::get('/album/artist/{id}', [AlbumController::class, 'showByArtist']);
+Route::post('/album/search', [AlbumController::class, 'search']);
 Route::post('/album', [AlbumController::class, 'store']);
 Route::put('/album/{id}', [AlbumController::class, 'update']);
 Route::delete('/album/{id}', [AlbumController::class, 'destroy']);
@@ -88,5 +89,11 @@ Route::post('/publication', [PublicationController::class, 'store']);
 Route::put('/publication/{id}', [PublicationController::class, 'update']);
 Route::delete('/publication/{id}', [PublicationController::class, 'destroy']);
 
-# RUTAS PROTEGIDS
+# RUTAS ROLES
+Route::post('/form/song', [SongController::class, 'save']);
+Route::post('/form/album', [AlbumController::class, 'save']);
+Route::post('/form/artist', [ArtistController::class, 'save']);
+// Route::post('/form/lyric', [LyricController::class, 'store']);
+
+# RUTAS PROTEGIDAS
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');

@@ -14,7 +14,8 @@ class Album extends Model
         'release_date',
         'genre',
         'image',
-        'id_artist'
+        'id_artist',
+        'verified'
     ];
 
     public function artist()

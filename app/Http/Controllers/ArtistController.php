@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 use Illuminate\Http\Request;
-
+use GuzzleHttp\Client;
 class ArtistController extends Controller
 {
     const UPLOAD_PATH = '/images/artists';
@@ -92,5 +92,30 @@ class ArtistController extends Controller
         }
         $artist->delete();
         return response()->json("Artist deleted Sucessfull", 204);
+    }
+
+    public function save(Request $request)
+    {
+        // AUTO CREATE ARTIST
+        if ($request->has('id')) {
+            $client = new Client();
+            $response = $client->request('GET', env('API_SERVICE_URL') . '/artist/' . $request->id);
+            $data = json_decode($response->getBody(), true);
+            // COMPROBAR QUE LOS DATOS SON IGUALES AL DE LA PETICION
+            if ($data['name'] == $request->name && $data['country'] == $request->country && $data['image'] == $request->image){
+                return response()->json("Correcto", 200);
+            }else{
+                return response()->json(["error"=>"Datos Invalidos"], 200);
+            }   
+        }else{
+            // MANUALLY CREATE ARTIST
+            $artist = new Artist();
+            $artist->name = $request->name;
+            $artist->country = $request->country;
+            $artist->verified = false;
+            $artist->image = $request->image;
+            $artist->save();
+        }
+        return response()->json("Created Sucessfull", 200);
     }
 }

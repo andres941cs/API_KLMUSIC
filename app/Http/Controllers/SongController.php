@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -131,5 +132,41 @@ class SongController extends Controller
     {
         $songs = Song::where('id_album', $id)->with('artist', 'album')->get();
         return $songs;
+    }
+
+    public function save(Request $request)
+    {
+        // AUTO CREATE ALBUM
+        if ($request->has('id')) {
+            $client = new Client();
+            $response = $client->request('GET', env('API_SERVICE_URL') . '/song/' . $request->id);
+            $data = json_decode($response->getBody(), true);
+            // COMPROBAR QUE LOS DATOS SON IGUALES AL DE LA PETICION
+            if ($data['name'] == $request->name && $data['duration'] == $request->duration && $data['image'] == $request->image){
+                Song::create([
+                    'name' => $request->name,
+                    'genre' => $request->genre,
+                    'duration' => $request->duration,
+                    'id_artist' => $request->id_artist,
+                    'id_album' => $request->id_album,
+                    'image' =>  $request->image,
+                    'verified' => true
+                ]);
+                return response()->json("Created Sucessfull", 200);
+            }else{
+                return response()->json(["error"=>"Invalid data"], 200);
+            }   
+        }else{
+            // MANUALLY CREATE ARTIST
+            $song = new Song();
+            $song->name = $request->name;
+            $song->duration = $request->duration;
+            $song->image = $request->image;
+            $song->genre = $request->genre;
+            $song->id_artist = $request->id_artist;
+            $song->id_album = $request->id_album;
+            $song->save();
+        }
+        return response()->json("Created Sucessfull", 200);
     }
 }

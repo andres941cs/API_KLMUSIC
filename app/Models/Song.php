@@ -14,7 +14,8 @@ class Song extends Model
         'duration',
         'genre',
         'id_artist',
-        'image'
+        'image',
+        'verified',
     ];
 
     public function artist()
