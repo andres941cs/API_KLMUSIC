@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/activate', function () {
+    return view('activate');
+});
+
+Route::get('/reset/{id}', function ($id) {
+    $decryptedId = Crypt::decrypt($id);
+    return view('resetPassword',['id' => $id]);
+});
+
+Route::get('/reset', function () {
+    return view('reset');
 });

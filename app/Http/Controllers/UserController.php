@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Message;
 class UserController extends Controller
 {
     # DEVUELVLE TODOS LOS USUARIOS DE LA BBDD
@@ -63,5 +64,21 @@ class UserController extends Controller
         $usuario = User::findOrFail($id);
         $usuario->delete();
         return response()->json("Usuario eliminado correctamente", 204);
+    }
+
+    public function send(){
+        # DATA
+        $name = '';
+        $email = 'andrescs941@gmail.com';
+
+        # MESSAGE
+        $message = [
+            'subject' => 'Bienvenido a la plataforma KLmusic',
+            'content' => 'Gracias por registrarte en nuestra plataforma'
+        ];
+
+        Mail::to($email)->send(new Message($message['subject'], $message['content']));
+
+        return response()->json("Mensaje enviado correctamente", 200);
     }
 }

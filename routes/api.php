@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 # RUTAS AUTHENTICATE
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/activate/{id}', [AuthController::class, 'activate']);
+Route::post('/reset', [AuthController::class, 'reset']);
+Route::post('/forgot', [AuthController::class, 'forgot']);
 
 # RUTAS USERS
 Route::get('/users', [UserController::class, 'index']);
@@ -35,6 +38,7 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::post('/user', [UserController::class, 'store']);
 Route::put('/user/{id}', [UserController::class, 'update']);
 Route::delete('/user/{id}', [UserController::class, 'destroy']);
+Route::get('/send', [UserController::class, 'send']);
 
 # RUTAR PROFILES
 Route::get('/profile/{id}', [ProfileController::class, 'show']);
@@ -49,6 +53,7 @@ Route::get('/song/album/{id}', [SongController::class, 'showByAlbum']);
 Route::put('/song/{id}', [SongController::class, 'update']);
 Route::delete('/song/{id}', [SongController::class, 'destroy']);
 Route::post('/song/search', [SongController::class, 'search']);
+
 # RUTAS ARTIST
 Route::get('/artist', [ArtistController::class, 'index']);
 Route::get('/artist/{id}', [ArtistController::class, 'show']);
@@ -82,12 +87,7 @@ Route::put('/karaoke/{id}', [KaraokeController::class, 'update']);
 Route::delete('/karaoke/{id}', [KaraokeController::class, 'destroy']);
 Route::get('/karaoke/search/{name}', [KaraokeController::class, 'search']);
 Route::get('/random/karaoke', [KaraokeController::class, 'random']);
-
-# RUTAS PUBLICATION
-Route::get('/publication', [PublicationController::class, 'index']);
-Route::post('/publication', [PublicationController::class, 'store']);
-Route::put('/publication/{id}', [PublicationController::class, 'update']);
-Route::delete('/publication/{id}', [PublicationController::class, 'destroy']);
+Route::get('/karaokes', [KaraokeController::class, 'all']);
 
 # RUTAS ROLES
 Route::post('/form/song', [SongController::class, 'save']);

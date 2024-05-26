@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Firebase\JWT\JWT;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Message;
+use Illuminate\Support\Facades\Crypt;
 class AuthController extends Controller
 {
     # REGISTRAR UN USUARIO EN LA BBDD
@@ -32,8 +34,18 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        //$token = $user->createToken('MyApp')->accessToken;
-        //return response(['token' => $token], 200);
+        # DATA
+        $email = $request->email;
+        $id = Crypt::encrypt($user->id);
+        # MESSAGE
+        $message = [
+            'subject' => 'Bienvenido a la plataforma KLmusic',
+            'content' => 'Gracias por registrarte en nuestra plataforma para activar la cuenta 
+            haz click en el siguiente enlace: '. env('APP_URL') .'/api/activate/'.$id
+        ];
+
+        Mail::to($email)->send(new Message($message['subject'], $message['content']));
+
         return response()->json(["message"=>"Usuario creado correctamente"]);
     }
 
@@ -55,5 +67,42 @@ class AuthController extends Controller
         } else {
             return response(['error' => 'Credenciales incorrectas'], 401);
         }
+    }
+
+    // ACTIVAR USUARIO
+    public function activate(string $id)
+    {
+        $decryptedId = Crypt::decrypt($id);
+        $user = User::findOrFail($decryptedId);
+        $user->update(['role' => 'member']);
+        return view('activate');
+    }
+
+    // FORGOT PASSWORD
+    public function forgot(Request $request)
+    {
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+        $id = Crypt::encrypt($user->id);
+        if ($user) {
+            $message = [
+                'subject' => 'Recuperar contraseña',
+                'content' => 'Para recuperar tu contraseña haz click en el siguiente enlace: '. env('APP_URL') .'/reset/'.$id
+            ];
+            Mail::to($email)->send(new Message($message['subject'], $message['content']));
+            return response()->json(["message"=>"Email sent successfully"]);
+        } else {
+            return response()->json(["message"=>"Email not found"]);
+        }
+    }
+
+    // RESET PASSWORD
+    public function reset(Request $request)
+    {
+        $id = Crypt::decrypt($request->id);
+        $password = $request->password;
+        $user = User::findOrFail($id);
+        $user->update(['password' => Hash::make($password)]);
+        return view('reset');
     }
 }

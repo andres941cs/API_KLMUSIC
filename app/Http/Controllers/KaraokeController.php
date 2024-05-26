@@ -8,11 +8,28 @@ use Illuminate\Http\Request;
 class KaraokeController extends Controller
 {
     /**
-     * DEVULEVE TODAS LAS CANCIONES DE LA BBDD
+     * DEVULEVE TODAS LOS KARAOKES DE LA BBDD
      */
     public function index()
     {
         return Karaoke::all();
+    }
+
+    public function all()
+    {
+        // DEVUELVE TODOS LOS KARAOKES CON SUS LETRAS Y CANCIONES
+        $karaokes = Karaoke::all()->load('lyric.song.artist', 'lyric.song.album');
+        $songs = [];
+        foreach ($karaokes as $karaoke) {
+            // QUIERO QUE EL ID DE LA CANCION SEA EL DEL KARAOKE
+            $song = $karaoke->lyric->song;
+            $song->id_karaoke = $karaoke->id;
+            $song->isInstrumental = $karaoke->lyric->isInstrumental;
+            $song->language = $karaoke->lyric->language;
+            // $song->id_song = $karaoke->lyric->song->id;
+            $songs[] = $song;
+        }
+        return response()->json($songs, 200);
     }
 
     public function showByUser(string $id)
