@@ -50,6 +50,29 @@ class UserController extends Controller
         // return response()->json($user, 200);
     }
 
+    public function edit(Request $request, string $id)
+    {
+        $user = User::findOrFail($id);
+        if ($request->has('username') || $request->has('email')) {
+            $user->update([
+                'username' => $request->username,
+                'email' => $request->email,
+            ]);
+            return response()->json("Profile changed", 200);
+        }
+        if ($request->has('password') && $request->has('new_password')) {
+            if(Hash::check($request->password, $user->password)){
+                $user->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
+                return response()->json("Password changed", 200);
+            }else{
+                return response()->json("Wrong Password", 400);
+            }
+        }
+            return response()->json("DATA INVALID", 500);
+    }
+
     # ACTUALIZA UN USUARIO - PARAMETROS: REQUEST, ID
     public function update(Request $request, string $id)
     {

@@ -40,10 +40,6 @@ Route::put('/user/{id}', [UserController::class, 'update']);
 Route::delete('/user/{id}', [UserController::class, 'destroy']);
 Route::get('/send', [UserController::class, 'send']);
 
-# RUTAR PROFILES
-Route::get('/profile/{id}', [ProfileController::class, 'show']);
-Route::put('/profile/{id}', [ProfileController::class, 'update']);
-
 # RUTAS SONGS
 Route::get('/songs', [SongController::class, 'index']);
 Route::post('/song', [SongController::class, 'store']);
@@ -97,3 +93,4 @@ Route::post('/form/artist', [ArtistController::class, 'save']);
 
 # RUTAS PROTEGIDAS
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
+Route::put('/profile/{id}', [UserController::class, 'edit'])->middleware('auth');
