@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Album;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,24 @@ class SongController extends Controller
      */
     public function index()
     {
-        // $songs = Song::all();
-        // foreach ($songs as $song) {
-        //     $song->artist_name = $song->artist->name;
-        //     if ($song->album) {
-        //         $song->album_name = $song->album->name;
-        //     }
-        //     // $song->album_name = $song->album->name;
-        //     unset($song->artist);
-        // }
         $songs = Song::with('artist', 'album')->get();
         return $songs;
     }
+
+    public function all()
+    {
+        // DEVULEVE TODAS LAS CANCIONES DE LA BBDD QUE ESTEN VERIFICADAS
+        $songs = Song::where('verified', true)->with('artist', 'album')->get();
+        return $songs;
+    }
+
+    public function unverified()
+    {
+        // DEVULEVE TODAS LAS CANCIONES DE LA BBDD QUE NO ESTEN VERIFICADAS
+        $songs = Song::where('verified', false)->with('artist', 'album')->get();
+        return $songs;
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -101,7 +108,7 @@ class SongController extends Controller
         # ECONTRAR LA CANCION A ACTUALIZAR
         $song = Song::findOrFail($id);
         # CAMPOS A ACTUALIZAR
-        $dataToUpdate = $request->only(['name', 'duration', 'genre', 'id_artist']);
+        $dataToUpdate = $request->only(['name', 'duration', 'genre', 'id_artist', 'id_album', 'image', 'verified']);
         # VERIFICAR LOS CAMPOS VACIOS
         if (empty($dataToUpdate)) {
             return response()->json(['error' => 'No se proporcionaron datos para actualizar'], 400);
@@ -157,6 +164,16 @@ class SongController extends Controller
                 return response()->json(["error"=>"Invalid data"], 200);
             }   
         }else{
+            // Validar que el album pertenece al artista
+            if($request->id_album){
+                # BUSCAR EL ALBUM
+                $album = Album::findOrFail($request->id_album);
+                # VERIFICAR QUE EL ALBUM PERTENECE AL ARTISTA
+                if ($album->id_artist != $request->id_artist) {
+                    return response()->json(["error" => "Album does not belong to the artist"], 200);
+                }
+            }
+
             // MANUALLY CREATE ARTIST
             $song = new Song();
             $song->name = $request->name;

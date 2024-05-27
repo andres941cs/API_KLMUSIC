@@ -42,6 +42,7 @@ Route::get('/send', [UserController::class, 'send']);
 
 # RUTAS SONGS
 Route::get('/songs', [SongController::class, 'index']);
+Route::get('/song', [SongController::class, 'all']);
 Route::post('/song', [SongController::class, 'store']);
 Route::get('/song/{id}', [SongController::class, 'show']);
 Route::get('/song/artist/{id}', [SongController::class, 'showByArtist']);
@@ -90,7 +91,16 @@ Route::post('/form/song', [SongController::class, 'save']);
 Route::post('/form/album', [AlbumController::class, 'save']);
 Route::post('/form/artist', [ArtistController::class, 'save']);
 // Route::post('/form/lyric', [LyricController::class, 'store']);
+Route::get('/artists', [ArtistController::class, 'all']);
+Route::get('/albums', [AlbumController::class, 'all']);
+
 
 # RUTAS PROTEGIDAS
+Route::put('/user/karaoke/visibility/{id}', [KaraokeController::class, 'changeVisibility'])->middleware('auth');
+Route::delete('/user/karaoke/{id}', [KaraokeController::class, 'destroy'])->middleware('auth');
+Route::get('/unverified/songs', [SongController::class, 'unverified']);
+Route::get('/unverified/albums', [AlbumController::class, 'unverified']);
+Route::get('/unverified/artists', [ArtistController::class, 'unverified']);
+
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
 Route::put('/profile/{id}', [UserController::class, 'edit'])->middleware('auth');

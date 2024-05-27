@@ -17,6 +17,20 @@ class AlbumController extends Controller
         return $albums;
     }
 
+    public function all()
+    {
+        // DEVUELVLE TODOS LOS ALBUMS DE LA BBDD QUE ESTAN VERIFICADOS
+        return Album::where('verified', true)->with('artist')->get();
+    }
+
+    public function unverified()
+    {
+        // DEVUELVLE TODOS LOS ALBUMS DE LA BBDD QUE NO ESTAN VERIFICADOS
+        return Album::where('verified', false)->with('artist')->get();
+    }
+
+
+
     public function show(string $id)
     {
         $album = Album::find($id);

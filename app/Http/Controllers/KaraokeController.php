@@ -52,10 +52,6 @@ class KaraokeController extends Controller
 
     public function search(string $name)
     {
-        // $karaoke = Karaoke::whereHas('Song', function ($query) use ($name) {
-        //     $query->where('name', 'like', "%$name%");
-        // })->get();
-
         $karaoke = Karaoke::whereHas('lyric.song', function ($query) use ($name) {
             $query->where('name', 'like', "%$name%");
         })->get()->load('lyric.song.artist');
@@ -104,4 +100,14 @@ class KaraokeController extends Controller
         $karaoke->delete();
         return response()->json("Song deleted Sucessfull", 204);
     }
+
+    public function changeVisibility(string $id)
+    {
+        $karaoke = Karaoke::findOrFail($id);
+        $karaoke->update([
+            'isPublished' => !$karaoke->isPublished
+        ]);
+        return response()->json("Change Visibility Sucessfull", 200);
+    }
+
 }

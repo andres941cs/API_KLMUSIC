@@ -15,6 +15,18 @@ class ArtistController extends Controller
     {
         return Artist::all();
     }
+
+    public function all()
+    {
+        // DEVUELVLE TODOS LOS ARTISTAS DE LA BBDD QUE ESTAN VERIFICADOS
+        return Artist::where('verified', true)->get();
+    }
+
+    public function unverified()
+    {
+        // DEVUELVLE TODOS LOS ARTISTAS DE LA BBDD QUE NO ESTAN VERIFICADOS
+        return Artist::where('verified', false)->get();
+    }
     
     /**
      * Store a newly created resource in storage.
