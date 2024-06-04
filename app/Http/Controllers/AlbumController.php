@@ -101,7 +101,7 @@ class AlbumController extends Controller
             'genre' => 'required',
         ]);
         $album = Album::findOrFail($id);
-        $album->update($request->only(['album_name', 'id_artist', 'release_date', 'genre']));
+        $album->update($request->only(['album_name', 'id_artist', 'release_date', 'genre','verified']));
 
         return response()->json($album);
     }
