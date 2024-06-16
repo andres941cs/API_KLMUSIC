@@ -46,7 +46,7 @@ class AlbumController extends Controller
     public function search(Request $request)
     {
         # HAY DOS FORMAS DE USAR EL POST $request->input('campo'); || $request->campo
-        $name = $request->input('search');
+        $name = $request->input('name');
         //$order = $request->input('order', 'asc');//defaul ASC
         # CREAR UNA CONSULTA
         $query = Album::query();
